@@ -503,7 +503,10 @@ This function is called at the very end of Spacemacs initialization."
      ("p" "Project" entry
       (file+olp "~/matematicasdavida/minhascoisas/org/notes.org" "Captured Projects")
       ""))))
-'(org-todo-keyword-faces
+ '(org-modules
+   (quote
+    (org-bbdb org-bibtex org-docview org-eww org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m org-notify)))
+ '(org-todo-keyword-faces
    (quote
     (("Idea" . "White")
      ("MissingRequirement" . "yellow")
