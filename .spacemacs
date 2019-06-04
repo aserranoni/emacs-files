@@ -530,25 +530,25 @@ This function is called at the very end of Spacemacs initialization."
  '(org-capture-templates
    (quote
     (("a" "Appointment" entry
-      (file+olp "~/matematicasdavida/minhascoisas/org/personal.org" "External Communication" "Appointments")
+      (file+olp "~/coisas/matematicasdavida/minhascoisas/org/personal.org" "External Communication" "Appointments")
       "")
      ("r" "Talk to" entry
-      (file+olp "~/matematicasdavida/minhascoisas/org/personal.org" "External Communication" "Talk to")
+      (file+olp "~/coisas/matematicasdavida/minhascoisas/org/personal.org" "External Communication" "Talk to")
       "")
      ("b" "Blog idea" entry
-      (file+olp "~/matematicasdavida/minhascoisas/org/application.org" "Build/Improve Website" "Add Content")
+      (file+olp "~/coisas/matematicasdavida/minhascoisas/org/application.org" "Build/Improve Website" "Add Content")
       "
 " :prepend t)
      ("t" "Task" entry
-      (file+headline "~/matematicasdavida/minhascoisas/org/notes.org" "Captured Tasks")
+      (file+headline "~/coisas/matematicasdavida/minhascoisas/org/notes.org" "Captured Tasks")
       "
 ")
      ("n" "Note" entry
-      (file+headline "~/matematicasdavida/minhascoisas/org/notes.org" "Notespace")
+      (file+headline "~/coisas/matematicasdavida/minhascoisas/org/notes.org" "Notespace")
       "
 ")
      ("p" "Project" entry
-      (file+olp "~/matematicasdavida/minhascoisas/org/notes.org" "Captured Projects")
+      (file+olp "~/coisas/matematicasdavida/minhascoisas/org/notes.org" "Captured Projects")
       ""))))
  '(org-modules
    (quote
