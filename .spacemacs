@@ -523,10 +523,10 @@ This function is called at the very end of Spacemacs initialization."
       "PDF Tools")
      (output-dvi "PDF Tools")
      (output-pdf "PDF Tools")
-     (output-html "xdg-open"))))
+     (output-html "PDF Tools"))))
  '(org-agenda-files
    (quote
-    ("~/matematicasdavida/minhascoisas/org/academic.org" "~/matematicasdavida/minhascoisas/org/application.org" "~/matematicasdavida/minhascoisas/org/personal.org")))
+    ("~/coisas/matematicasdavida/minhascoisas/org/academic.org" "~/coisas/matematicasdavida/minhascoisas/org/application.org" "~/coisas/matematicasdavida/minhascoisas/org/personal.org")))
  '(org-capture-templates
    (quote
     (("a" "Appointment" entry
