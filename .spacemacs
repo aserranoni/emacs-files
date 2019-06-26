@@ -46,13 +46,17 @@ This function should only modify configuration layer settings."
      (c-c++ :variables c-c++-enable-clang-support t)
      (latex :variables latex-enable-magic nil magic-latex-enable-suscript nil)
      git
+     spotify
+     elfeed
+     games
+     twitter
+     search-engine
      themes-megapack
      markdown
      ipython-notebook
      ;; neotree
-     ;(python :variables python-backend 'lsp python-enable-yapf-format-on-save t python-sort-imports-on-save t)
-     ;
-     elfeed
+     (python :variables python-backend 'lsp python-enable-yapf-format-on-save t python-sort-imports-on-save t)
+     emoji
      bibtex
      ;; dlsp
      pdf-tools
@@ -72,12 +76,13 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(
                                       ess
+                                      w3
                                       wolfram-mode
                                       org-ref
                                       org-noter
+                                      org-brain
                                       ace-window
                                       swiper
-                                      avy
                                       elpy
                                       )
 
@@ -140,7 +145,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Set `gc-cons-threshold' and `gc-cons-percentage' when startup finishes.
    ;; This is an advanced option and should not be changed unless you suspect
-   ;; performance issues due to garbage collection operations.
+   ;; performance issues d ue to garbage collection operations.
    ;; (default '(100000000 0.1))
    dotspacemacs-gc-cons '(100000000 0.1)
 
@@ -173,7 +178,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-editing-style 'emacs
 
    ;; If non-nil output loading progress in `*Messages*' buffer. (default nil)
-   dotspacemacs-verbose-loading 't
+   dotspacemacs-verbose-loading 'nil
 
    ;; Specify the startup banner. Default value is `official', it displays
    ;; the official spacemacs logo. An integer value is the index of text
@@ -482,7 +487,6 @@ before packages are loaded."
   (menu-bar-mode -1);; essa aqui é a unica que as vezes pode prestar
   (toggle-scroll-bar -1)
   (tool-bar-mode -1)
-
 ;; Additional Keybindings
   (global-set-key [24 111] (quote ace-window))
   (global-set-key [19] (quote swiper))
@@ -492,12 +496,12 @@ before packages are loaded."
 ;; Major Mode Hooks - include other wolfram extensions
   (add-to-list 'auto-mode-alist '("\.m$" . wolfram-mode))
   (add-hook 'python-mode-hook #'elpy-mode)
-  ;;Functions to set up startup screen
-  ;(split-window-right)
-  ;(ace-window)
-  ;(next-buffer)
-  ;(split-window-below)
-  )
+  ;; Function to enable multiple eshell instances
+  (defun eshell-new()
+    "Open a new instance of eshell."
+    (interactive)
+    (eshell 'N)
+  ))
 
 
 
@@ -524,9 +528,14 @@ This function is called at the very end of Spacemacs initialization."
      (output-dvi "PDF Tools")
      (output-pdf "PDF Tools")
      (output-html "PDF Tools"))))
+ '(browse-url-browser-function (quote browse-url-w3))
+ '(elfeed-feeds (quote ("https://math.stackexchange.com/feeds
+")))
+ '(helm-w32-launcher-csc-executable nil)
  '(org-agenda-files
    (quote
     ("~/coisas/matematicasdavida/minhascoisas/org/academic.org" "~/coisas/matematicasdavida/minhascoisas/org/application.org" "~/coisas/matematicasdavida/minhascoisas/org/personal.org")))
+ '(org-brain-path "/home/ariel/coisas/matematicasdavida/minhascoisas/org/")
  '(org-capture-templates
    (quote
     (("a" "Appointment" entry
@@ -553,6 +562,11 @@ This function is called at the very end of Spacemacs initialization."
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-eww org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m org-notify)))
+ '(org-noter-default-notes-file-names (quote ("pdfnotes.org")))
+ '(org-noter-doc-property-in-notes t)
+ '(org-ref-default-bibliography
+   (quote
+    ("/home/ariel/coisas/matematicasdavida/Livros/library.bib")))
  '(org-todo-keyword-faces
    (quote
     (("Idea" . "White")
@@ -563,7 +577,13 @@ This function is called at the very end of Spacemacs initialization."
      ("TODO" . "magenta"))))
  '(package-selected-packages
    (quote
-    (yapfify xterm-color smeargle shell-pop pyvenv pytest pyenv-mode py-isort pip-requirements orgit org-projectile org-category-capture org-present org-plus-contrib org-pomodoro alert log4e gntp org-mime org-download multi-term mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup live-py-mode hy-mode dash-functional htmlize helm-pydoc helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy evil-magit magit transient git-commit with-editor eshell-z eshell-prompt-extras esh-help ein skewer-mode deferred request websocket js2-mode simple-httpd disaster cython-mode company-statistics company-c-headers company-auctex company-anaconda company cmake-mode clang-format auto-yasnippet yasnippet auctex-latexmk auctex anaconda-mode pythonic f dash s ac-ispell auto-complete which-key use-package pcre2el macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag exec-path-from-shell evil-visualstar evil-escape elisp-slime-nav diminish bind-map auto-compile ace-window ace-jump-helm-line))))
+    (unicode-fonts org-brain helm-w32-launcher helm-w3m w3 w3m w32-browser yapfify xterm-color smeargle shell-pop pyvenv pytest pyenv-mode py-isort pip-requirements orgit org-projectile org-category-capture org-present org-plus-contrib org-pomodoro alert log4e gntp org-mime org-download multi-term mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup live-py-mode hy-mode dash-functional htmlize helm-pydoc helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy evil-magit magit transient git-commit with-editor eshell-z eshell-prompt-extras esh-help ein skewer-mode deferred request websocket js2-mode simple-httpd disaster cython-mode company-statistics company-c-headers company-auctex company-anaconda company cmake-mode clang-format auto-yasnippet yasnippet auctex-latexmk auctex anaconda-mode pythonic f dash s ac-ispell auto-complete which-key use-package pcre2el macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag exec-path-from-shell evil-visualstar evil-escape elisp-slime-nav diminish bind-map auto-compile ace-window ace-jump-helm-line)))
+ '(reftex-default-bibliography (quote ("~/coisas/matematicasdavida/Livros/library.bib")))
+ '(rmh-elfeed-org-files
+   (quote
+    ("~/coisas/matematicasdavida/minhascoisas/org/rssfeeds.org")))
+ '(send-mail-function (quote smtpmail-send-it))
+ '(warning-minimum-level :emergency))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
