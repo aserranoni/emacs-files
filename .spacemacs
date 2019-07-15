@@ -46,7 +46,6 @@ This function should only modify configuration layer settings."
      (c-c++ :variables c-c++-enable-clang-support t)
      (latex :variables latex-enable-magic nil magic-latex-enable-suscript nil)
      git
-     spotify
      elfeed
      games
      twitter
@@ -490,19 +489,20 @@ before packages are loaded."
 ;; Additional Keybindings
   (global-set-key [24 111] (quote ace-window))
   (global-set-key [19] (quote swiper))
-  ;(define-key pdf-view-mode (kbd "C-c C-n") 'org-noter)
+ ;(define-key pdf-view-mode (kbd "C-c C-n") 'org-noter)
   (global-set-key (kbd "C-c C-n") 'org-noter)
   (global-set-key (kbd "C-x C-2") 'new-frame)
+  (global-set-key (kbd "C-c C-b") 'org-brain-visualize)
 ;; Major Mode Hooks - include other wolfram extensions
   (add-to-list 'auto-mode-alist '("\.m$" . wolfram-mode))
   (add-hook 'python-mode-hook #'elpy-mode)
-  ;; Function to enable multiple eshell instances
+;; Function to enable multiple eshell instances
   (defun eshell-new()
     "Open a new instance of eshell."
     (interactive)
     (eshell 'N)
-  ))
-
+    )
+  )
 
 
 
@@ -528,9 +528,10 @@ This function is called at the very end of Spacemacs initialization."
      (output-dvi "PDF Tools")
      (output-pdf "PDF Tools")
      (output-html "PDF Tools"))))
- '(browse-url-browser-function (quote browse-url-w3))
- '(elfeed-feeds (quote ("https://math.stackexchange.com/feeds
-")))
+ '(browse-url-browser-function (quote browse-url-chrome))
+ '(browse-url-chrome-program
+   "/mnt/c/Program Files (x86)/google/chrome/Application/chrome.exe")
+ '(elfeed-feeds nil)
  '(helm-w32-launcher-csc-executable nil)
  '(org-agenda-files
    (quote
@@ -559,11 +560,16 @@ This function is called at the very end of Spacemacs initialization."
      ("p" "Project" entry
       (file+olp "~/coisas/matematicasdavida/minhascoisas/org/notes.org" "Captured Projects")
       ""))))
+ '(org-feed-alist
+   (quote
+    (("MathStackExchange" "https://math.stackexchange.com/feeds/tag/calculus" "~/coisas/matematicasdavida/minhascoisas/org/rssfeeds.org" "Convex Analysis- MSE"))))
+ '(org-feed-retrieve-method (quote wget))
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-eww org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m org-notify)))
  '(org-noter-default-notes-file-names (quote ("pdfnotes.org")))
  '(org-noter-doc-property-in-notes t)
+ '(org-noter-notes-search-path (quote ("~/coisas/matematicasdavida/minhascoisas/org")))
  '(org-ref-default-bibliography
    (quote
     ("/home/ariel/coisas/matematicasdavida/Livros/library.bib")))
@@ -577,7 +583,7 @@ This function is called at the very end of Spacemacs initialization."
      ("TODO" . "magenta"))))
  '(package-selected-packages
    (quote
-    (unicode-fonts org-brain helm-w32-launcher helm-w3m w3 w3m w32-browser yapfify xterm-color smeargle shell-pop pyvenv pytest pyenv-mode py-isort pip-requirements orgit org-projectile org-category-capture org-present org-plus-contrib org-pomodoro alert log4e gntp org-mime org-download multi-term mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup live-py-mode hy-mode dash-functional htmlize helm-pydoc helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy evil-magit magit transient git-commit with-editor eshell-z eshell-prompt-extras esh-help ein skewer-mode deferred request websocket js2-mode simple-httpd disaster cython-mode company-statistics company-c-headers company-auctex company-anaconda company cmake-mode clang-format auto-yasnippet yasnippet auctex-latexmk auctex anaconda-mode pythonic f dash s ac-ispell auto-complete which-key use-package pcre2el macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag exec-path-from-shell evil-visualstar evil-escape elisp-slime-nav diminish bind-map auto-compile ace-window ace-jump-helm-line)))
+    (emms org-fancy-priorities unicode-fonts org-brain helm-w32-launcher helm-w3m w3 w3m w32-browser yapfify xterm-color smeargle shell-pop pyvenv pytest pyenv-mode py-isort pip-requirements orgit org-projectile org-category-capture org-present org-plus-contrib org-pomodoro alert log4e gntp org-mime org-download multi-term mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup live-py-mode hy-mode dash-functional htmlize helm-pydoc helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy evil-magit magit transient git-commit with-editor eshell-z eshell-prompt-extras esh-help ein skewer-mode deferred request websocket js2-mode simple-httpd disaster cython-mode company-statistics company-c-headers company-auctex company-anaconda company cmake-mode clang-format auto-yasnippet yasnippet auctex-latexmk auctex anaconda-mode pythonic f dash s ac-ispell auto-complete which-key use-package pcre2el macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag exec-path-from-shell evil-visualstar evil-escape elisp-slime-nav diminish bind-map auto-compile ace-window ace-jump-helm-line)))
  '(reftex-default-bibliography (quote ("~/coisas/matematicasdavida/Livros/library.bib")))
  '(rmh-elfeed-org-files
    (quote
