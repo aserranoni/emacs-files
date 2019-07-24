@@ -528,6 +528,8 @@ This function is called at the very end of Spacemacs initialization."
      (output-dvi "PDF Tools")
      (output-pdf "PDF Tools")
      (output-html "PDF Tools"))))
+ '(bibtex-completion-notes-path "/~/coisas/matematicasdavida/minhascoisas/org/pdfnotes.org")
+ '(bibtex-completion-pdf-field "nil")
  '(browse-url-browser-function (quote browse-url-chrome))
  '(browse-url-chrome-program
    "/mnt/c/Program Files (x86)/google/chrome/Application/chrome.exe")
@@ -536,6 +538,7 @@ This function is called at the very end of Spacemacs initialization."
  '(org-agenda-files
    (quote
     ("~/coisas/matematicasdavida/minhascoisas/org/academic.org" "~/coisas/matematicasdavida/minhascoisas/org/application.org" "~/coisas/matematicasdavida/minhascoisas/org/personal.org")))
+ '(org-babel-load-languages (quote ((python . t) (emacs-lisp . t) (R . t))))
  '(org-brain-path "/home/ariel/coisas/matematicasdavida/minhascoisas/org/")
  '(org-capture-templates
    (quote
@@ -564,6 +567,10 @@ This function is called at the very end of Spacemacs initialization."
    (quote
     (("MathStackExchange" "https://math.stackexchange.com/feeds/tag/calculus" "~/coisas/matematicasdavida/minhascoisas/org/rssfeeds.org" "Convex Analysis- MSE"))))
  '(org-feed-retrieve-method (quote wget))
+ '(org-habit-preceding-days 7)
+ '(org-habit-show-all-today t)
+ '(org-habit-show-done-always-green t)
+ '(org-habit-show-habits-only-for-today nil)
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-eww org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m org-notify)))
@@ -573,6 +580,29 @@ This function is called at the very end of Spacemacs initialization."
  '(org-ref-default-bibliography
    (quote
     ("/home/ariel/coisas/matematicasdavida/Livros/library.bib")))
+ '(org-ref-get-pdf-filename-function (quote org-ref-get-mendeley-filename))
+ '(org-src-lang-modes
+   (quote
+    (("mathematica" . wolfram)
+     ("ein-hy" . hy)
+     ("ein" . python)
+     ("arduino" . arduino)
+     ("redis" . redis)
+     ("php" . php)
+     ("C" . c)
+     ("C++" . c++)
+     ("asymptote" . asy)
+     ("bash" . sh)
+     ("beamer" . latex)
+     ("calc" . fundamental)
+     ("cpp" . c++)
+     ("ditaa" . artist)
+     ("dot" . fundamental)
+     ("elisp" . emacs-lisp)
+     ("ocaml" . tuareg)
+     ("screen" . shell-script)
+     ("shell" . sh)
+     ("sqlite" . sql))))
  '(org-todo-keyword-faces
    (quote
     (("Idea" . "White")
@@ -583,7 +613,7 @@ This function is called at the very end of Spacemacs initialization."
      ("TODO" . "magenta"))))
  '(package-selected-packages
    (quote
-    (emms org-fancy-priorities unicode-fonts org-brain helm-w32-launcher helm-w3m w3 w3m w32-browser yapfify xterm-color smeargle shell-pop pyvenv pytest pyenv-mode py-isort pip-requirements orgit org-projectile org-category-capture org-present org-plus-contrib org-pomodoro alert log4e gntp org-mime org-download multi-term mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup live-py-mode hy-mode dash-functional htmlize helm-pydoc helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy evil-magit magit transient git-commit with-editor eshell-z eshell-prompt-extras esh-help ein skewer-mode deferred request websocket js2-mode simple-httpd disaster cython-mode company-statistics company-c-headers company-auctex company-anaconda company cmake-mode clang-format auto-yasnippet yasnippet auctex-latexmk auctex anaconda-mode pythonic f dash s ac-ispell auto-complete which-key use-package pcre2el macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag exec-path-from-shell evil-visualstar evil-escape elisp-slime-nav diminish bind-map auto-compile ace-window ace-jump-helm-line)))
+    (org-edna helm-emms emms org-fancy-priorities unicode-fonts org-brain helm-w32-launcher helm-w3m w3 w3m w32-browser yapfify xterm-color smeargle shell-pop pyvenv pytest pyenv-mode py-isort pip-requirements orgit org-projectile org-category-capture org-present org-plus-contrib org-pomodoro alert log4e gntp org-mime org-download multi-term mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup live-py-mode hy-mode dash-functional htmlize helm-pydoc helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy evil-magit magit transient git-commit with-editor eshell-z eshell-prompt-extras esh-help ein skewer-mode deferred request websocket js2-mode simple-httpd disaster cython-mode company-statistics company-c-headers company-auctex company-anaconda company cmake-mode clang-format auto-yasnippet yasnippet auctex-latexmk auctex anaconda-mode pythonic f dash s ac-ispell auto-complete which-key use-package pcre2el macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag exec-path-from-shell evil-visualstar evil-escape elisp-slime-nav diminish bind-map auto-compile ace-window ace-jump-helm-line)))
  '(reftex-default-bibliography (quote ("~/coisas/matematicasdavida/Livros/library.bib")))
  '(rmh-elfeed-org-files
    (quote
@@ -595,4 +625,6 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(org-habit-alert-face ((t (:background "green"))))
+ '(org-habit-alert-future-face ((t (:background "DeepPink3"))))
+ '(org-habit-overdue-future-face ((t (:background "yellow")))))
