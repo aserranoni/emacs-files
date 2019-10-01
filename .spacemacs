@@ -20,50 +20,48 @@ This function should only modify configuration layer settings."
    ;; installation feature and you have to explicitly list a layer in the
    ;; variable `dotspacemacs-configuration-layers' to install it.
    ;; (default 'unused)
-   dotspacemacs-enable-lazy-installation 'nil
+   dotspacemacs-enable-lazy-installation 'unused
 
    ;; If non-nil then Spacemacs will ask for confirmation before installing
    ;; a layer lazily. (default t)
-   dotspacemacs-ask-for-lazy-installation nil
+   dotspacemacs-ask-for-lazy-installation t
 
-   ;; If non-nil layers with lazy install support are lazy installed.
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
    dotspacemacs-configuration-layer-path '()
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(python
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     helm
-     auto-completion
-     ;; better-defaults
-     emacs-lisp
-     (c-c++ :variables c-c++-enable-clang-support t)
-     (latex :variables latex-enable-magic nil magic-latex-enable-suscript nil)
-     git
-     elfeed
-     games
-     twitter
      search-engine
-     themes-megapack
-     markdown
-     ipython-notebook
-     ;; neotree
-     (python :variables python-backend 'lsp python-enable-yapf-format-on-save t python-sort-imports-on-save t)
-     emoji
+     auto-completion
+     c-c++
+     emacs-lisp
+     (latex :variables
+            latex-enable-magic nil
+            magic-latex-enable-suscript nil)
      bibtex
-     ;; dlsp
-     pdf-tools
-     org
-     spell-checking
+     pdf
+     ess
+     git
+     helm
+     elfeed
+     (org :variables
+          org-agenda-files '("~/coisas/matematicasdavida/minhascoisas/org/academic.org"
+                             "~/coisas/matematicasdavida/minhascoisas/org/personal.org"
+                             "~/coisas/matematicasdavida/minhascoisas/org/application.org")
+          )
+     ;; (shell :variables
+     ;;        shell-default-height 30
+     ;;        shell-default-position 'bottom)
+     ;; spell-checking
      ;; syntax-checking
      ;; version-control
-     ;; pdf
      )
 
    ;; List of additional packages that will be installed without being
@@ -74,25 +72,20 @@ This function should only modify configuration layer settings."
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(
-                                      ess
-                                      w3
-                                      wolfram-mode
-                                      org-ref
+                                      workgroups2
+                                      avy
+                                      ace-window
                                       org-noter
                                       org-brain
-                                      ace-window
-                                      swiper
+                                      rainbow-delimiters
                                       elpy
                                       )
 
    ;; A list of packages that cannot be updated.
-   dotspacemacs-frozen-packages '(font-lock+
-                                  org-plus-contrib
-                                 )
+   dotspacemacs-frozen-packages '()
 
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(font-lock+
-                                    org-plus-contrib)
+   dotspacemacs-excluded-packages '()
 
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
@@ -101,7 +94,7 @@ This function should only modify configuration layer settings."
    ;; installs only the used packages but won't delete unused ones. `all'
    ;; installs *all* packages supported by Spacemacs and never uninstalls them.
    ;; (default is `used-only')
-   dotspacemacs-install-packages 'all))
+   dotspacemacs-install-packages 'used-only))
 
 (defun dotspacemacs/init ()
   "Initialization:
@@ -117,10 +110,10 @@ It should only modify the values of Spacemacs settings."
    ;; (default nil)
    dotspacemacs-enable-emacs-pdumper nil
 
-   ;; File path pointing to emacs 27.1 executable compiled with support
-   ;; for the portable dumper (this is currently the branch pdumper).
-   ;; (default "emacs-27.0.50")
-   dotspacemacs-emacs-pdumper-executable-file "emacs-27.0.50"
+   ;; Name of executable file pointing to emacs 27+. This executable must be
+   ;; in your PATH.
+   ;; (default "emacs")
+   dotspacemacs-emacs-pdumper-executable-file "emacs"
 
    ;; Name of the Spacemacs dump file. This is the file will be created by the
    ;; portable dumper in the cache directory under dumps sub-directory.
@@ -140,11 +133,11 @@ It should only modify the values of Spacemacs settings."
 
    ;; Maximum allowed time in seconds to contact an ELPA repository.
    ;; (default 5)
-   dotspacemacs-elpa-timeout 10
+   dotspacemacs-elpa-timeout 5
 
    ;; Set `gc-cons-threshold' and `gc-cons-percentage' when startup finishes.
    ;; This is an advanced option and should not be changed unless you suspect
-   ;; performance issues d ue to garbage collection operations.
+   ;; performance issues due to garbage collection operations.
    ;; (default '(100000000 0.1))
    dotspacemacs-gc-cons '(100000000 0.1)
 
@@ -154,8 +147,8 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-use-spacelpa nil
 
    ;; If non-nil then verify the signature for downloaded Spacelpa archives.
-   ;; (default nil)
-   dotspacemacs-verify-spacelpa-archives nil
+   ;; (default t)
+   dotspacemacs-verify-spacelpa-archives t
 
    ;; If non-nil then spacemacs will check for updates at startup
    ;; when the current branch is not `develop'. Note that checking for
@@ -176,9 +169,6 @@ It should only modify the values of Spacemacs settings."
    ;; (default 'vim)
    dotspacemacs-editing-style 'emacs
 
-   ;; If non-nil output loading progress in `*Messages*' buffer. (default nil)
-   dotspacemacs-verbose-loading 'nil
-
    ;; Specify the startup banner. Default value is `official', it displays
    ;; the official spacemacs logo. An integer value is the index of text
    ;; banner, `random' chooses a random text banner in `core/banners'
@@ -190,29 +180,35 @@ It should only modify the values of Spacemacs settings."
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
    ;; Possible values for list-type are:
-   ;; `recents' `bookmarks' `projects' `agenda' `todos'.
+;   ;; `recents' `bookmarks' `projects' `agenda' `todos'.
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
-   dotspacemacs-startup-lists '((agenda . 5)
-                                (projects . 5)
-                                (recents . 5))
+   dotspacemacs-startup-lists '((bookmarks . 5)
+                                (agenda . 5)
+                                (todos . 5)
+                                (recents . 5)
+                                (projects . 5))
 
    ;; True if the home buffer should respond to resize events. (default t)
    dotspacemacs-startup-buffer-responsive t
+
+   ;; Default major mode for a new empty buffer. Possible values are mode
+   ;; names such as `text-mode'; and `nil' to use Fundamental mode.
+   ;; (default `text-mode')
+   dotspacemacs-new-empty-buffer-major-mode 'org-mode
 
    ;; Default major mode of the scratch buffer (default `text-mode')
    dotspacemacs-scratch-mode 'org-mode
 
    ;; Initial message in the scratch buffer, such as "Welcome to Spacemacs!"
    ;; (default nil)
-   dotspacemacs-initial-scratch-message "O que temos pra hoje?"
+   dotspacemacs-initial-scratch-message "Stop procrastinating and WORK!"
 
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(spacemacs-dark
-                         spacemacs-light
-                         wonbat)
+                         spacemacs-light)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
    ;; `all-the-icons', `custom', `doom', `vim-powerline' and `vanilla'. The
@@ -221,16 +217,15 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5)
+   dotspacemacs-mode-line-theme '(all-the-icons :separator wave :separator-scale 1.5)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
    dotspacemacs-colorize-cursor-according-to-state t
 
-   ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
-   ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Consolas"
-                               :size 13
+   ;; Default font or prioritized list of fonts.
+   dotspacemacs-default-font '("DejaVu Sans Mono"
+                               ;;:size 12.0
                                :weight normal
                                :width normal)
 
@@ -250,7 +245,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Major mode leader key is a shortcut key which is the equivalent of
    ;; pressing `<leader> m`. Set it to `nil` to disable it. (default ",")
-   dotspacemacs-major-mode-leader-key 'nil
+   dotspacemacs-major-mode-leader-key ","
 
    ;; Major mode leader key accessible in `emacs state' and `insert state'.
    ;; (default "C-M-m")
@@ -282,13 +277,13 @@ It should only modify the values of Spacemacs settings."
    ;; Size (in MB) above which spacemacs will prompt to open the large file
    ;; literally to avoid performance issues. Opening a file literally means that
    ;; no major mode or minor modes are active. (default is 1)
-   dotspacemacs-large-file-size 10
+   dotspacemacs-large-file-size 25
 
    ;; Location where to auto-save files. Possible values are `original' to
    ;; auto-save the file in-place, `cache' to auto-save the file to another
    ;; file stored in the cache directory and `nil' to disable auto-saving.
    ;; (default 'cache)
-   dotspacemacs-auto-save-file-location 'original
+   dotspacemacs-auto-save-file-location 'cache
 
    ;; Maximum number of rollback slots to keep in the cache. (default 5)
    dotspacemacs-max-rollback-slots 5
@@ -300,7 +295,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
-   dotspacemacs-which-key-delay 0.6
+   dotspacemacs-which-key-delay 0.4
 
    ;; Which-key frame position. Possible values are `right', `bottom' and
    ;; `right-then-bottom'. right-then-bottom tries to display the frame to the
@@ -318,7 +313,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil a progress bar is displayed when spacemacs is loading. This
    ;; may increase the boot time on some systems and emacs builds, set it to
    ;; nil to boost the loading time. (default t)
-   dotspacemacs-loading-progress-bar nil
+   dotspacemacs-loading-progress-bar t
 
    ;; If non-nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
@@ -332,6 +327,11 @@ It should only modify the values of Spacemacs settings."
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
    dotspacemacs-maximized-at-startup t
+
+   ;; If non-nil the frame is undecorated when Emacs starts up. Combine this
+   ;; variable with `dotspacemacs-maximized-at-startup' in OSX to obtain
+   ;; borderless fullscreen. (default nil)
+   dotspacemacs-undecorated-at-startup nil
 
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
@@ -360,10 +360,14 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-smooth-scrolling t
 
    ;; Control line numbers activation.
-   ;; If set to `t' or `relative' line numbers are turned on in all `prog-mode' and
-   ;; `text-mode' derivatives. If set to `relative', line numbers are relative.
+   ;; If set to `t', `relative' or `visual' then line numbers are enabled in all
+   ;; `prog-mode' and `text-mode' derivatives. If set to `relative', line
+   ;; numbers are relative. If set to `visual', line numbers are also relative,
+   ;; but lines are only visual lines are counted. For example, folded lines
+   ;; will not be counted and wrapped lines are counted as multiple lines.
    ;; This variable can also be set to a property list for finer control:
    ;; '(:relative nil
+   ;;   :visual nil
    ;;   :disabled-for-modes dired-mode
    ;;                       doc-view-mode
    ;;                       markdown-mode
@@ -371,6 +375,7 @@ It should only modify the values of Spacemacs settings."
    ;;                       pdf-view-mode
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
+   ;; When used in a plist, `visual' takes precedence over `relative'.
    ;; (default nil)
    dotspacemacs-line-numbers nil
 
@@ -380,10 +385,10 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil `smartparens-strict-mode' will be enabled in programming modes.
    ;; (default nil)
-   dotspacemacs-smartparens-strict-mode nil
+   dotspacemacs-smartparens-strict-mode t
 
    ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
-   ;; over any automatically added closing parenthesis, bracket, quote, etc…
+   ;; over any automatically added closing parenthesis, bracket, quote, etc...
    ;; This can be temporary disabled by pressing `C-q' before `)'. (default nil)
    dotspacemacs-smart-closing-parenthesis t
 
@@ -429,7 +434,7 @@ It should only modify the values of Spacemacs settings."
    ;; %z - mnemonics of buffer, terminal, and keyboard coding systems
    ;; %Z - like %z, but including the end-of-line format
    ;; (default "%I@%S")
-   dotspacemacs-frame-title-format "%a@%m@%S"
+   dotspacemacs-frame-title-format "%I@%S"
 
    ;; Format specification for setting the icon title format
    ;; (default nil - same as frame-title-format)
@@ -440,7 +445,7 @@ It should only modify the values of Spacemacs settings."
    ;; `trailing' to delete only the whitespace at end of lines, `changed' to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup nil
+   dotspacemacs-whitespace-cleanup t
 
    ;; Either nil or a number of seconds. If non-nil zone out after the specified
    ;; number of seconds. (default nil)
@@ -481,29 +486,162 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
-;;Basic customization - Hide tollbars and mute sounds
-  (setq visible-bell 1)
-  (menu-bar-mode -1);; essa aqui é a unica que as vezes pode prestar
-  (toggle-scroll-bar -1)
-  (tool-bar-mode -1)
-;; Additional Keybindings
-  (global-set-key [24 111] (quote ace-window))
-  (global-set-key [19] (quote swiper))
- ;(define-key pdf-view-mode (kbd "C-c C-n") 'org-noter)
-  (global-set-key (kbd "C-c C-n") 'org-noter)
-  (global-set-key (kbd "C-x C-2") 'new-frame)
-  (global-set-key (kbd "C-c C-b") 'org-brain-visualize)
+;; Extra custom keybindings
+
+  (global-set-key (kbd "C-x s") (quote eshell)) ;; open eshell with
+  (global-set-key (kbd "C-x C-2") (quote new-frame)) ;; open new frame
+  (global-set-key (kbd "C-s") (quote helm-occur)) ;; Helm fancy search
+  (rainbow-delimiters-mode 1)
 ;; Major Mode Hooks - include other wolfram extensions
+
   (add-to-list 'auto-mode-alist '("\.m$" . wolfram-mode))
   (add-hook 'python-mode-hook #'elpy-mode)
-;; Function to enable multiple eshell instances
+
+;; Org-Noter
+
+
+      (global-set-key (kbd "C-c C-n") (quote org-noter))
+    (setq org-noter-default-notes-file-names (quote ("pdfnotes.org")))
+    (setq org-noter-doc-property-in-notes t)
+    (setq org-noter-notes-search-path (quote ("~/coisas/matematicasdavida/minhascoisas/org")))
+
+;; Org-Brain
+
+
+      (global-set-key (kbd "C-c C-b") (quote org-brain-visualize))
+      (setq org-brain-path "/home/ariel/coisas/matematicasdavida/minhascoisas/org/")
+
+;; Ace Window
+
+      (global-set-key [remap other-window] 'ace-window)
+      (custom-set-faces
+       '(aw-leading-char-face
+         ((t (:inherit ace-jump-face-foreground :height 2.0)))))
+      (global-set-key (kbd "C-x o") (quote ace-window))
+
+  ;; Avy
+
+    (avy-setup-default)
+    (setq avy-all-windows t)
+    (global-set-key (kbd "M-n w") (quote avy-goto-word-0)) ;; Navigate to word
+    (global-set-key (kbd "M-n l") (quote avy-goto-line)) ;; Navigate ro line
+    (global-set-key (kbd "M-n c r") (quote avy-kill-ring-save-region))
+    (global-set-key (kbd "M-n k r") (quote avy-kill-region))
+
+ ;; Support for multiple eshell instances
+
   (defun eshell-new()
     "Open a new instance of eshell."
     (interactive)
     (eshell 'N)
     )
-  )
 
+;; ESS SETUP - Got from github
+
+(setq-default ess-dialect "R")
+(setq-default inferior-R-args "--no-restore-history --no-save ")
+
+(defadvice ess-eval-buffer (before really-eval-buffer compile activate)
+  "Prevent call ess-eval-buffer by accident, frequently by
+   hitting C-c C-b instead of C-c C-n."
+  (if (yes-or-no-p
+       (format "Are you sure you want to evaluate the %s buffer?"
+               buffer-file-name))
+      (message "ess-eval-buffer started.")
+    (error "ess-eval-buffer canceled!")))
+
+(add-hook
+ 'ess-mode-hook
+ '(lambda()
+    (ess-toggle-underscore nil)
+    (define-key ess-mode-map [?\M--]
+      'ess-cycle-assign) ;; `Alt + -'  to cycle `<- | <<- | = ...'.
+    (auto-complete-mode 1)
+    (company-mode 1)                               ;; (company-mode -1)
+    (define-key ess-mode-map (kbd "C-c C-t e") (quote ess-rdired))
+    (define-key ess-mode-map [f5] 'company-R-args) ;; F5 do show ARGS.
+    (setq ess-indent-with-fancy-comments nil) ;; No indent levels.
+    (setq-local comment-add 0)                ;; Single # as default.
+    (setq ess-smart-operators t)              ;; Smart comma.
+    (setq comint-scroll-to-bottom-on-input t)
+    (setq comint-scroll-to-bottom-on-output t)
+    (setq comint-move-point-for-output t)))
+
+;; Script and console font lock highlight.
+(setq ess-R-font-lock-keywords
+      '((ess-R-fl-keyword:modifiers . t)
+        (ess-R-fl-keyword:fun-defs . t)
+        (ess-R-fl-keyword:keywords . t)
+        (ess-R-fl-keyword:assign-ops . t)
+        (ess-R-fl-keyword:constants . t)
+        (ess-fl-keyword:fun-calls . t)
+        (ess-fl-keyword:numbers . t)
+        (ess-fl-keyword:operators . t)
+        (ess-fl-keyword:delimiters . t)
+        (ess-fl-keyword:= . t)
+        (ess-R-fl-keyword:F&T . t)))
+(setq inferior-R-font-lock-keywords
+      '((ess-S-fl-keyword:prompt . t)
+        (ess-R-fl-keyword:messages . t)
+        (ess-R-fl-keyword:modifiers . t)
+        (ess-R-fl-keyword:fun-defs . t)
+        (ess-R-fl-keyword:keywords . t)
+        (ess-R-fl-keyword:assign-ops . t)
+        (ess-R-fl-keyword:constants . t)
+        (ess-fl-keyword:matrix-labels . t)
+        (ess-fl-keyword:fun-calls . t)
+        (ess-fl-keyword:numbers . t)
+        (ess-fl-keyword:operators . t)
+        (ess-fl-keyword:delimiters . t)
+        (ess-fl-keyword:= . t)
+        (ess-R-fl-keyword:F&T . t)))
+
+
+;;; Some Variables
+
+(setq TeX-view-program-selection
+      (quote (
+              ((output-dvi has-no-display-manager) "PDF Tools")
+              ((output-dvi style-pstricks) "PDF Tools")
+              (output-dvi "PDF Tools")
+              (output-pdf "PDF Tools")
+              (output-html "PDF Tools"))))
+(setq bibtex-completion-notes-path "~/coisas/matematicasdavida/minhascoisas/org/pdfnotes.org")
+(setq bibtex-completion-pdf-field "nil")
+
+(setq org-modules (quote
+   (org-bbdb org-bibtex org-docview org-eww org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m org-notify)))
+
+
+(setq org-babel-load-languages (quote
+                                ((python . t)
+                                 (emacs-lisp . t)
+                                 (R . t))))
+
+(setq org-ref-default-bibliography (quote
+                                    ("/home/ariel/coisas/matematicasdavida/Livros/library.bib")))
+(setq org-ref-get-pdf-filename-function (quote org-ref-get-mendeley-filename))
+
+(setq reftex-default-bibliography (quote
+                                            ("~/coisas/matematicasdavida/Livros/library.bib")))
+
+(setq rmh-elfeed-org-files(quote
+                           ("~/coisas/matematicasdavida/minhascoisas/org/rssfeeds.org")))
+
+(setq org-todo-keyword-faces (quote
+   (("Idea" . "White")
+    ("MissingRequirement" . "yellow")
+    ("DONE" . "green")
+    ("Cancelled" . "forest green")
+    ("HugeObstacle" . "red")
+    ("TODO" . "magenta"))))
+
+(setq org-habit-preceding-days 7)
+(setq org-habit-show-all-today t)
+(setq org-habit-show-done-always-green t)
+
+
+)
 
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -513,118 +651,36 @@ before packages are loaded."
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
-)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(TeX-view-program-selection
+ '(org-latex-default-packages-alist
    (quote
-    (((output-dvi has-no-display-manager)
-      "PDF Tools")
-     ((output-dvi style-pstricks)
-      "PDF Tools")
-     (output-dvi "PDF Tools")
-     (output-pdf "PDF Tools")
-     (output-html "PDF Tools"))))
- '(bibtex-completion-notes-path "/~/coisas/matematicasdavida/minhascoisas/org/pdfnotes.org")
- '(bibtex-completion-pdf-field "nil")
- '(browse-url-browser-function (quote browse-url-chrome))
- '(browse-url-chrome-program
-   "/mnt/c/Program Files (x86)/google/chrome/Application/chrome.exe")
- '(elfeed-feeds nil)
- '(helm-w32-launcher-csc-executable nil)
- '(org-agenda-files
-   (quote
-    ("~/coisas/matematicasdavida/minhascoisas/org/academic.org" "~/coisas/matematicasdavida/minhascoisas/org/application.org" "~/coisas/matematicasdavida/minhascoisas/org/personal.org")))
- '(org-babel-load-languages (quote ((python . t) (emacs-lisp . t) (R . t))))
- '(org-brain-path "/home/ariel/coisas/matematicasdavida/minhascoisas/org/")
- '(org-capture-templates
-   (quote
-    (("a" "Appointment" entry
-      (file+olp "~/coisas/matematicasdavida/minhascoisas/org/personal.org" "External Communication" "Appointments")
-      "")
-     ("r" "Talk to" entry
-      (file+olp "~/coisas/matematicasdavida/minhascoisas/org/personal.org" "External Communication" "Talk to")
-      "")
-     ("b" "Blog idea" entry
-      (file+olp "~/coisas/matematicasdavida/minhascoisas/org/application.org" "Build/Improve Website" "Add Content")
-      "
-" :prepend t)
-     ("t" "Task" entry
-      (file+headline "~/coisas/matematicasdavida/minhascoisas/org/notes.org" "Captured Tasks")
-      "
-")
-     ("n" "Note" entry
-      (file+headline "~/coisas/matematicasdavida/minhascoisas/org/notes.org" "Notespace")
-      "
-")
-     ("p" "Project" entry
-      (file+olp "~/coisas/matematicasdavida/minhascoisas/org/notes.org" "Captured Projects")
-      ""))))
- '(org-feed-alist
-   (quote
-    (("MathStackExchange" "https://math.stackexchange.com/feeds/tag/calculus" "~/coisas/matematicasdavida/minhascoisas/org/rssfeeds.org" "Convex Analysis- MSE"))))
- '(org-feed-retrieve-method (quote wget))
- '(org-habit-preceding-days 7)
- '(org-habit-show-all-today t)
- '(org-habit-show-done-always-green t)
- '(org-habit-show-habits-only-for-today nil)
- '(org-modules
-   (quote
-    (org-bbdb org-bibtex org-docview org-eww org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m org-notify)))
- '(org-noter-default-notes-file-names (quote ("pdfnotes.org")))
- '(org-noter-doc-property-in-notes t)
- '(org-noter-notes-search-path (quote ("~/coisas/matematicasdavida/minhascoisas/org")))
- '(org-ref-default-bibliography
-   (quote
-    ("/home/ariel/coisas/matematicasdavida/Livros/library.bib")))
- '(org-ref-get-pdf-filename-function (quote org-ref-get-mendeley-filename))
- '(org-src-lang-modes
-   (quote
-    (("mathematica" . wolfram)
-     ("ein-hy" . hy)
-     ("ein" . python)
-     ("arduino" . arduino)
-     ("redis" . redis)
-     ("php" . php)
-     ("C" . c)
-     ("C++" . c++)
-     ("asymptote" . asy)
-     ("bash" . sh)
-     ("beamer" . latex)
-     ("calc" . fundamental)
-     ("cpp" . c++)
-     ("ditaa" . artist)
-     ("dot" . fundamental)
-     ("elisp" . emacs-lisp)
-     ("ocaml" . tuareg)
-     ("screen" . shell-script)
-     ("shell" . sh)
-     ("sqlite" . sql))))
- '(org-todo-keyword-faces
-   (quote
-    (("Idea" . "White")
-     ("MissingRequirement" . "yellow")
-     ("DONE" . "green")
-     ("Cancelled" . "forest green")
-     ("HugeObstacle" . "red")
-     ("TODO" . "magenta"))))
+    (("AUTO" "inputenc" t
+      ("pdflatex"))
+     ("T1" "fontenc" t
+      ("pdflatex"))
+     ("" "graphicx" t nil)
+     ("" "grffile" t nil)
+     ("" "longtable" nil nil)
+     ("" "wrapfig" nil nil)
+     ("" "rotating" nil nil)
+     ("normalem" "ulem" t nil)
+     ("" "amsmath" t nil)
+     ("" "textcomp" t nil)
+     ("" "amssymb" t nil)
+     ("" "capt-of" nil nil)
+     ("" "hyperref" nil nil)
+     ("" "packages" nil nil))))
  '(package-selected-packages
    (quote
-    (org-edna helm-emms emms org-fancy-priorities unicode-fonts org-brain helm-w32-launcher helm-w3m w3 w3m w32-browser yapfify xterm-color smeargle shell-pop pyvenv pytest pyenv-mode py-isort pip-requirements orgit org-projectile org-category-capture org-present org-plus-contrib org-pomodoro alert log4e gntp org-mime org-download multi-term mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup live-py-mode hy-mode dash-functional htmlize helm-pydoc helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy evil-magit magit transient git-commit with-editor eshell-z eshell-prompt-extras esh-help ein skewer-mode deferred request websocket js2-mode simple-httpd disaster cython-mode company-statistics company-c-headers company-auctex company-anaconda company cmake-mode clang-format auto-yasnippet yasnippet auctex-latexmk auctex anaconda-mode pythonic f dash s ac-ispell auto-complete which-key use-package pcre2el macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag exec-path-from-shell evil-visualstar evil-escape elisp-slime-nav diminish bind-map auto-compile ace-window ace-jump-helm-line)))
- '(reftex-default-bibliography (quote ("~/coisas/matematicasdavida/Livros/library.bib")))
- '(rmh-elfeed-org-files
-   (quote
-    ("~/coisas/matematicasdavida/minhascoisas/org/rssfeeds.org")))
- '(send-mail-function (quote smtpmail-send-it))
- '(warning-minimum-level :emergency))
+    (engine-mode workgroups2 anaphora zones window-layout rainbow-delimiters ob-ipython mmm-mode markdown-toc helm-rtags google-c-style gh-md ein skewer-mode polymode websocket js2-mode simple-httpd disaster cpp-auto-include company-rtags rtags company-c-headers clang-format yapfify stickyfunc-enhance smartparens pytest pyenv-mode py-isort pippel pipenv pip-requirements lsp-python-ms python lsp-mode spinner ht dash-functional live-py-mode importmagic epc concurrent deferred helm-pydoc helm-gtags helm-cscope xcscope ggtags evil-matchit cython-mode counsel-gtags counsel swiper company-anaconda blacken anaconda-mode pythonic org-ref key-chord ivy helm-bibtex parsebib biblio biblio-core ess poly-R org-noter poly-markdown markdown-mode ace-window yasnippet-snippets helm-company helm-c-yasnippet fuzzy elfeed-org elfeed-goodies ace-jump-mode noflet powerline popwin elfeed company-statistics company-reftex company-auctex company auto-yasnippet yasnippet ac-ispell auto-complete which-key use-package treemacs-projectile treemacs-magit toc-org smeargle pdf-tools pcre2el overseer orgit org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-brain nameless magit-svn magit-gitflow macrostep hybrid-mode htmlize helm-xref helm-themes helm-swoop helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-gitignore helm-git-grep helm-flx helm-descbinds helm-ag gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flycheck-package evil-org evil-mc evil-magit elisp-slime-nav dotenv-mode diminish bind-map auto-compile auctex-latexmk ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-habit-alert-face ((t (:background "green"))))
- '(org-habit-alert-future-face ((t (:background "DeepPink3"))))
- '(org-habit-overdue-future-face ((t (:background "yellow")))))
+ '(aw-leading-char-face ((t (:inherit ace-jump-face-foreground :height 2.0)))))
+)
