@@ -175,6 +175,7 @@ This package allows one to test packages from melpa before installing them.
 ;; Setting some keybindings    
 
 (global-set-key (kbd "M-n w") 'avy-goto-word-0) ;; Navigate to word
+(global-set-key (kbd "M-n c") 'avy-goto-char) ;; Navigate to char
 (global-set-key (kbd "M-n l") 'avy-goto-line) ;; Navigate ro line
 #+END_SRC
 
@@ -334,26 +335,9 @@ This package allows one to test packages from melpa before installing them.
 #+end_src
 
 ** Org 
-*** org-babel
-*** org-bullets   
-    #+BEGIN_SRC emacs-lisp
-(use-package org-bullets
-:ensure t)
-(org-bullets-mode)    
-#+END_SRC
-*** org-ref 
-#+BEGIN_SRC emacs-lisp
-(use-package org-ref
-:ensure t)
-(setq org-ref-default-bibliography "~/coisas/matematicasdavida/Livros/library.bib")
-#+END_SRC
-
+*** org-ref
 *** org-brain
 *** org-agenda
-#+BEGIN_SRC emcas-lisp
-(setq org-agenda-files
-    '("~/coisas/matematicasdavida/minhascoisas/org/academic.org" "~/coisas/matematicasdavida/minhascoisas/org/personal.org" "~/coisas/matematicasdavida/minhascoisas/org/application.org"))
-#+END_SRC
 *** org-noter
 *** org-reveal
     - Package that turns renders org files as awesome presentations using reveal.js package
@@ -370,6 +354,5 @@ This package allows one to test packages from melpa before installing them.
 #+END_SRC
 
 ** LaTeX
-
-cite:Nocedal2006         
+         
 
