@@ -1,0 +1,383 @@
+#+STARTIP: overview 
+
+** Extra KeyBindings for built-in functions
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-x s") (quote eshell)) ;; open eshell with
+(global-set-key (kbd "C-x C-2") (quote new-frame)) ;; open new frame
+;; C-z to 'undo, the default is C-/.
+(global-unset-key "\C-z")
+(global-set-key "\C-z" 'undo)
+#+END_SRC   
+
+** Extra Functions
+#+begin_src emacs-lisp
+;; Function to enable multiple eshell instances
+  (defun eshell-new()
+    "Open a new instance of eshell."
+    (interactive)
+    (eshell 'N)
+    )
+#+end_src
+
+** hide menus, startup message and mute
+
+#+BEGIN_SRC emacs-lisp
+  (global-hl-line-mode 1)             ;; Highlight the cursor line.
+  (visual-line-mode 1)                ;; Screen lines, not logical lines.
+  (show-paren-mode 1)                 ;; Highlight matching pairs.
+  (setq inhibit-startup-message t)
+  (setq visible-bell 1)
+  (setq warning-minimum-level :emergency)
+  (menu-bar-mode -1)
+  (toggle-scroll-bar -1)
+  (tool-bar-mode -1)
+   
+#+END_SRC 
+
+** Themes
+   
+#+BEGIN_SRC emacs-lisp   
+  (use-package spacemacs-theme
+      :ensure t)
+
+   (load-theme (quote spacemacs-dark) t)
+
+'(custom-safe-themes
+   (quote
+    ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
+ 
+#+END_SRC
+
+** Buffer Management
+*** Show Buffers as Tabs Using tabbar and tabbar-ruler - Disabled
+
+  #+BEGIN_SRC emacs-lisp
+      ;Install and Configure tabbar
+
+   ;   (use-package tabbar
+   ;          :ensure t
+   ;          :config (tabbar-mode 1)
+   ;           )
+            
+      ;Install and Configure tabbar-ruler
+
+     ; (use-package tabbar-ruler
+     ;        :ensure t
+     ;       :config ((setq tabbar-ruler-global-tabbar t)    ; get tabbar
+     ;                  (setq tabbar-ruler-global-ruler nil)   ; get global ruler
+     ;                  (setq tabbar-ruler-popup-menu t)       ; get popup menu.
+     ;                  (setq tabbar-ruler-popup-toolbar t)    ; get popup toolbar
+     ;                  (setq tabbar-ruler-popup-scrollbar t)) ;
+     ;         )  
+
+         
+    #+END_SRC
+  - Set-up keybindings
+  #+BEGIN_SRC emacs-lisp
+    ;tabbar-backward
+    ;tabbar-backward-tab (C-x C-left)
+    ;tabbar-forward-tab (C-x C-right)
+    ;tabbar-forward 
+  #+END_SRC
+
+** Window Management
+*** Winner Mode
+    - winner-mode keeps track of your recent window configurations. To navigate between them use C-c and the left/right arrow
+    #+BEGIN_SRC emacs-lisp
+     (winner-mode 1)
+    #+END_SRC
+
+*** Ace Window Manager
+
+    #+BEGIN_SRC emacs-lisp
+(use-package ace-window
+:ensure t
+:init
+(progn
+(global-set-key [remap other-window] 'ace-window)
+(custom-set-faces
+'(aw-leading-char-face
+((t (:inherit ace-jump-face-foreground :height 2.0)))))
+))
+  
+    #+END_SRC 
+
+*** Winmove - Can Replace Ace - Disabled  
+    - Uses Shift + Arrows to navigate between windows - Disabled
+   #+BEGIN_SRC emacs-lisp    
+     ;(windmove-default-keybindings)
+   #+END_SRC
+    
+** Helm
+
+# #+BEGIN_SRC emacs-lisp
+#    (use-package helm
+#        :ensure t)
+# (require 'helm-config)  
+	
+# ;;KeyBindings
+
+# (global-set-key [134217848] (quote helm-M-x)) ; M-x -> helm-M-x
+# 	(global-set-key [24 6] (quote helm-find-files)) ;C-x C-f -> helm-find-files
+# 	(global-set-key [24 2] (quote helm-buffers-list)) ;C-x C-b -> helm-buffers-list
+# 	(global-set-key (kbd "C-s") (quote helm-occur)) ; Search inside files
+
+
+# #+END_SRC
+    
+** Counsel
+  #+BEGIN_SRC emacs-lisp
+(ivy-mode 1)
+(use-package counsel
+:ensure t
+)
+
+ #+END_SRC
+** Auto-completion
+
+ Needing to run function to startup!!
+
+ #+BEGIN_SRC emacs-lisp
+   (use-package auto-complete
+   :ensure t)
+
+   (auto-complete-mode)
+#+END_SRC
+
+** Try
+This package allows one to test packages from melpa before installing them.
+
+#+BEGIN_SRC emacs-lisp
+(use-package try
+:ensure t)
+#+END_SRC 
+
+** Which Key
+
+   - Opens up possible key bindings in current context
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package which-key
+:ensure t
+:config
+(which-key-mode))
+
+#+END_SRC 
+    
+** Navigation with Avy
+*** Install package
+#+BEGIN_SRC emacs-lisp
+(use-package avy
+:ensure t
+:config
+(avy-setup-default))
+
+;; Setting some keybindings    
+
+(global-set-key (kbd "M-n w") 'avy-goto-word-0) ;; Navigate to word
+(global-set-key (kbd "M-n l") 'avy-goto-line) ;; Navigate ro line
+#+END_SRC
+
+** Git
+#+begin_src emacs-lisp
+(use-package magit
+:ensure t)
+
+;; KeyBindings
+
+#+end_src
+** Pdf-tools
+#+begin_src emacs-lisp
+(use-package pdf-tools
+:ensure t)
+
+(add-to-list 'auto-mode-alist ("\.pdf" . pdf-view-mode))
+
+#+end_src emacs-lisp
+
+** MarkDown
+
+#+begin_src emacs-lisp
+(use-package markdown-mode
+:ensure t)
+
+(autoload 'markdown-mode "markdown-mode"
+  "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'"       . markdown-mode))
+
+;; Org-struct minor mode active in markdown mode.
+(add-hook 'markdown-mode-hook 'turn-on-orgstruct)
+(add-hook 'markdown-mode-hook 'turn-on-orgstruct++)
+
+;; Enable Index at the menu bar with the TOC of markdown document.
+(add-hook 'markdown-mode-hook 'imenu-add-menubar-index)
+(setq imenu-auto-rescan t)
+
+;; https://leanpub.com/markdown-mode/read -> section 4.6.
+(require 'imenu-list)
+(setq imenu-list-focus-after-activation t
+      imenu-list-auto-resize nil)
+
+;; Uses F10 to toggle the TOC sidebar for easy navigation.
+(add-hook 'markdown-mode-hook
+          '(lambda()
+             (global-set-key (kbd "<f10>") 'imenu-list-smart-toggle)))
+
+#+end_src
+
+** Org 
+*** org-babel
+*** org-bullets   
+    #+BEGIN_SRC emacs-lisp
+(use-package org-bullets
+:ensure t
+:config)
+(org-bullets-mode)    
+#+END_SRC
+*** org-ref 
+#+BEGIN_SRC emacs-lisp
+(use-package org-ref
+:ensure t)
+(setq org-ref-default-bibliography "~/coisas/matematicasdavida/Livros/library.bib")
+#+END_SRC
+
+*** org-brain
+*** org-agenda
+#+BEGIN_SRC emacs-lisp
+  (setq org-agenda-files ("~/coisas/matematicasdavida/minhascoisas/org/academic.org" 
+			  "~/coisas/matematicasdavida/minhascoisas/org/personal.org"
+			  "~/coisas/matematicasdavida/minhascoisas/org/application.org"))
+ 
+#+END_SRC
+*** org-noter
+*** org-reveal
+    - Package that turns renders org files as awesome presentations using reveal.js package
+    - requires reveal.js installation  
+#+BEGIN_SRC emacs-lisp
+;(use-package ox-reveal
+;:ensure ox-reveal)
+
+;(setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
+;(setq org-reveal-mathjax t)
+
+;(use-package htmlize
+;:ensure t)      
+#+END_SRC
+* Programming Languages    
+** Python
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package elpy
+      :ensure t
+      :init (elpy-enable)
+      :variables (elpy-modules '(elpy-module-company
+				 elpy-module-eldoc
+				 elpy-module-pyvenv
+				 elpy-module-highlight-indentation
+				 elpy-module-yasnippet
+				 elpy-module-django
+				 elpy-module-autodoc
+				 elpy-module-sane-defaults)))
+     #+END_SRC
+
+** ESS-R
+#+begin_src emacs-lisp
+;; R-Markdown Support
+(use-package poly-markdown
+             :ensure t)
+(use-package poly-R
+             :ensure t)
+
+;; (autoload 'poly-markdown-mode "poly-markdown-mode"
+;;   "Major mode for editing R-Markdown files" t)
+;; (add-to-list 'auto-mode-alist '("\\.[Rr]md" . poly-markdown+r-mode))
+(add-to-list 'auto-mode-alist '("\\.[Rr]md" . poly-markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.Rnw" . poly-noweb+r-mode))
+
+;; ESS SETUP - Got from github
+(use-package ess
+:ensure t)
+(require 'ess-site)
+
+(setq-default ess-dialect "R")
+(setq-default inferior-R-args "--no-restore-history --no-save ")
+
+(require 'ess-view)
+(setq ess-view--spreadsheet-program "gnumeric")
+
+(defadvice ess-eval-buffer (before really-eval-buffer compile activate)
+  "Prevent call ess-eval-buffer by accident, frequently by
+   hitting C-c C-b instead of C-c C-n."
+  (if (yes-or-no-p
+       (format "Are you sure you want to evaluate the %s buffer?"
+               buffer-file-name))
+      (message "ess-eval-buffer started.")
+    (error "ess-eval-buffer canceled!")))
+
+(add-hook
+ 'ess-mode-hook
+ '(lambda()
+    (ess-toggle-underscore nil)
+    (define-key ess-mode-map [?\M--]
+      'ess-cycle-assign) ;; `Alt + -'  to cycle `<- | <<- | = ...'.
+    (auto-complete-mode 1)
+    (company-mode 1)                               ;; (company-mode -1)
+    (define-key ess-mode-map [f5] 'company-R-args) ;; F5 do show ARGS.
+    (setq ess-indent-with-fancy-comments nil) ;; No indent levels.
+    (setq-local comment-add 0)                ;; Single # as default.
+    (setq ess-smart-operators t)              ;; Smart comma.
+    (setq comint-scroll-to-bottom-on-input t)
+    (setq comint-scroll-to-bottom-on-output t)
+    (setq comint-move-point-for-output t)))
+
+;; Script and console font lock highlight.
+(setq ess-R-font-lock-keywords
+      '((ess-R-fl-keyword:modifiers . t)
+        (ess-R-fl-keyword:fun-defs . t)
+        (ess-R-fl-keyword:keywords . t)
+        (ess-R-fl-keyword:assign-ops . t)
+        (ess-R-fl-keyword:constants . t)
+        (ess-fl-keyword:fun-calls . t)
+        (ess-fl-keyword:numbers . t)
+        (ess-fl-keyword:operators . t)
+        (ess-fl-keyword:delimiters . t)
+        (ess-fl-keyword:= . t)
+        (ess-R-fl-keyword:F&T . t)))
+(setq inferior-R-font-lock-keywords
+      '((ess-S-fl-keyword:prompt . t)
+        (ess-R-fl-keyword:messages . t)
+        (ess-R-fl-keyword:modifiers . t)
+        (ess-R-fl-keyword:fun-defs . t)
+        (ess-R-fl-keyword:keywords . t)
+        (ess-R-fl-keyword:assign-ops . t)
+        (ess-R-fl-keyword:constants . t)
+        (ess-fl-keyword:matrix-labels . t)
+        (ess-fl-keyword:fun-calls . t)
+        (ess-fl-keyword:numbers . t)
+        (ess-fl-keyword:operators . t)
+        (ess-fl-keyword:delimiters . t)
+        (ess-fl-keyword:= . t)
+        (ess-R-fl-keyword:F&T . t)))
+
+;; Movement across chunks in Rnw files.
+(global-set-key (kbd "C-S-<f5>") 'ess-eval-chunk)
+(global-set-key (kbd "C-S-<f6>") 'ess-eval-chunk-and-step)
+(global-set-key (kbd "C-S-<f7>") 'ess-noweb-next-code-chunk)
+(global-set-key (kbd "C-S-<f8>") 'ess-noweb-previous-code-chunk)
+(global-set-key (kbd "C-S-<f9>") 'ess-noweb-goto-chunk)
+
+(dolist (mode '(ess-mode-hook lisp-mode-hook))
+  (add-hook mode
+            '(lambda ()
+               (global-set-key (kbd "<M-right>")  'forward-sexp)
+               (global-set-key (kbd "<M-left>")   'bakward-sexp)
+               (global-set-key (kbd "<M-down>")   'forward-list)
+               (global-set-key (kbd "<M-up>")     'backward-list)
+               (global-set-key (kbd "<M-S-up>")   'backward-up-list)
+               (global-set-key (kbd "<M-S-down>") 'down-list))))
+
+#+end_src
+
+** LaTeX
